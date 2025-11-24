@@ -142,6 +142,13 @@
       opacity: 0;
     }
 
+    .hint {
+      margin-top: 0.8rem;
+      font-size: 0.75rem;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+
     @media (max-width: 480px) {
       .card {
         padding: 2rem 1.7rem;
@@ -165,6 +172,11 @@
     </a>
 
     <div id="status" class="status hidden"></div>
+
+    <div class="hint">
+      Se il server non si apre si consiglia di cancellare la cronologia
+      del browser e ricaricare la pagina.
+    </div>
   </main>
 
   <script>
@@ -172,7 +184,6 @@
       const statusEl = document.getElementById('status');
       const linkEl = document.getElementById('ip-link');
 
-      // stato iniziale
       statusEl.classList.add('hidden');
       statusEl.textContent = '';
 
