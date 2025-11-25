@@ -28,6 +28,7 @@
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .card {
@@ -38,7 +39,7 @@
       box-shadow:
         0 20px 40px rgba(15, 23, 42, 0.45),
         0 0 0 1px rgba(148, 163, 184, 0.2);
-      max-width: 420px;
+      max-width: 440px;
       width: 90%;
       text-align: center;
       backdrop-filter: blur(16px);
@@ -83,26 +84,71 @@
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: #9ca3af;
-      margin-bottom: 0.7rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      align-items: stretch;
+    }
+
+    .link-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .link-caption {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #9ca3af;
+    }
+
+    .icon-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.3rem;
+      height: 1.3rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .icon-home {
+      font-size: 1rem;
+      border: none;
+      background: transparent;
+      width: auto;
+      height: auto;
     }
 
     .ip-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 0.6rem;
       padding: 0.85rem 1.7rem;
       border-radius: 999px;
       background: radial-gradient(circle at top left, #22c55e, #16a34a);
       color: #ecfdf5;
-      font-size: 1.1rem;
+      font-size: 1.02rem;
       font-weight: 600;
       text-decoration: none;
       box-shadow:
         0 10px 25px rgba(34, 197, 94, 0.45),
         0 0 0 1px rgba(34, 197, 94, 0.3);
       transform: translateY(0);
-      opacity: 0;
-      pointer-events: none;
+      opacity: 1;
       transition:
         transform 0.18s ease-out,
         box-shadow 0.18s ease-out,
@@ -110,9 +156,11 @@
         opacity 0.35s ease-out;
     }
 
-    .ip-link.visible {
-      opacity: 1;
-      pointer-events: auto;
+    .ip-link.secondary {
+      background: radial-gradient(circle at top left, #38bdf8, #0ea5e9);
+      box-shadow:
+        0 10px 25px rgba(56, 189, 248, 0.45),
+        0 0 0 1px rgba(56, 189, 248, 0.4);
     }
 
     .ip-link:hover {
@@ -123,6 +171,12 @@
       filter: brightness(1.05);
     }
 
+    .ip-link.secondary:hover {
+      box-shadow:
+        0 18px 35px rgba(56, 189, 248, 0.55),
+        0 0 0 1px rgba(56, 189, 248, 0.5);
+    }
+
     .ip-link:active {
       transform: translateY(0) scale(0.99);
       box-shadow:
@@ -131,19 +185,19 @@
       filter: brightness(0.98);
     }
 
-    .status {
-      font-size: 0.8rem;
-      color: #6b7280;
-      margin-top: 0.8rem;
-      min-height: 1.2em;
+    .ip-link.secondary:active {
+      box-shadow:
+        0 10px 20px rgba(14, 165, 233, 0.7),
+        0 0 0 1px rgba(12, 148, 233, 0.7);
     }
 
-    .status.hidden {
-      opacity: 0;
+    .ip-text {
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      letter-spacing: 0.02em;
     }
 
     .hint {
-      margin-top: 0.8rem;
+      margin-top: 1rem;
       font-size: 0.75rem;
       color: #6b7280;
       line-height: 1.4;
@@ -156,6 +210,12 @@
       .ip-link {
         width: 100%;
       }
+      .link-row {
+        align-items: stretch;
+      }
+      .link-caption {
+        justify-content: flex-start;
+      }
     }
   </style>
 </head>
@@ -167,11 +227,40 @@
 
     <div class="ip-label">Server</div>
 
-    <a id="ip-link" class="ip-link" href="#" target="_blank" rel="noopener noreferrer">
-      …
-    </a>
+    <div class="links">
+      <!-- Link locale -->
+      <div class="link-row">
+        <div class="link-caption">
+          <span class="icon-home">🏠</span>
+          <span>Rete locale</span>
+        </div>
+        <a
+          class="ip-link"
+          href="http://192.168.1.4:5008"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="ip-text">192.168.1.4:5008</span>
+        </a>
+      </div>
 
-    <div id="status" class="status hidden"></div>
+      <!-- Link esterno (IP da ip.txt) -->
+      <div class="link-row">
+        <div class="link-caption">
+          <span class="icon-circle">www</span>
+          <span>Accesso esterno</span>
+        </div>
+        <a
+          id="external-link"
+          class="ip-link secondary"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span id="external-text" class="ip-text">…</span>
+        </a>
+      </div>
+    </div>
 
     <div class="hint">
       Se il server non si apre si consiglia di cancellare la cronologia
@@ -180,12 +269,9 @@
   </main>
 
   <script>
-    async function loadIp() {
-      const statusEl = document.getElementById('status');
-      const linkEl = document.getElementById('ip-link');
-
-      statusEl.classList.add('hidden');
-      statusEl.textContent = '';
+    async function loadExternalIp() {
+      const linkEl = document.getElementById('external-link');
+      const textEl = document.getElementById('external-text');
 
       try {
         const response = await fetch('ip.txt?cb=' + Date.now(), {
@@ -207,21 +293,17 @@
           url = 'http://' + url;
         }
 
-        linkEl.textContent = text;
+        textEl.textContent = text;
         linkEl.href = url;
-        linkEl.classList.add('visible');
 
       } catch (err) {
         console.error(err);
-        linkEl.textContent = 'Offline';
+        textEl.textContent = 'Offline';
         linkEl.href = '#';
-        linkEl.classList.add('visible');
-        statusEl.textContent = '';
-        statusEl.classList.add('hidden');
       }
     }
 
-    document.addEventListener('DOMContentLoaded', loadIp);
+    document.addEventListener('DOMContentLoaded', loadExternalIp);
   </script>
 </body>
 </html>
